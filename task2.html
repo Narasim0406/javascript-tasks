@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<title>Web Page Design</title>
+<head>
+<script>
+let objs = {
+    "name": "narasim",
+    "address": {
+        "personal": "chennai", 
+        "office": {
+            "building" : "home",
+            "street" : "main street"
+        }
+    }
+}
+
+let ob = {
+	"id": "0001",
+	"type": "donut",
+	"name": "Cake",
+	"ppu": 0.55,
+	"batters": {
+		"batter": [{
+				"id": "1001",
+				"type": "Regular"
+			},
+			{
+				"id": "1002",
+				"type": "Chocolate"
+			},
+			{
+				"id": "1003",
+				"type": "Blueberry"
+			},
+			{
+				"id": "1004",
+				"type": "Devil's Food"
+			}
+		]
+	},
+	"topping": [{
+			"id": "5001",
+			"type": "None"
+		},
+		{
+			"id": "5002",
+			"type": "Glazed"
+		},
+		{
+			"id": "5005",
+			"type": "Sugar"
+		},
+		{
+			"id": "5007",
+			"type": "Powdered Sugar"
+		},
+		{
+			"id": "5006",
+			"type": "Chocolate with Sprinkles"
+		},
+		{
+			"id": "5003",
+			"type": "Chocolate"
+		},
+		{
+			"id": "5004",
+			"type": "Maple"
+		}
+	]
+}
+
+var obj = {
+ "employee": {
+  "name": {
+   "firstName": "nara",
+   "lastName": "simha"
+  },
+  "address": [
+   {
+    "street": "a",
+    "city": "b",
+    "state": "c"
+   },
+   {
+    "street": "a1",
+    "city": "b1",
+    "state": "c1"
+   }
+  ]
+ }
+}
+
+
+
+function flatten(obj){
+    var vll = [];
+    for (const [key, value] of Object.entries(obj)) {
+        var k = []
+        
+        if(typeof value == 'object' && Array.isArray( value ) == false){
+            //console.log((typeof value), '------>', value)
+            var flaten = flatten(value)
+            
+            for (var x in flaten) {
+                k.push(key)
+				if (!flaten.hasOwnProperty(x)) continue;
+				
+                k.push(flaten[x].key)
+                var ka = flattenn(k);
+                vll.push({'key': ka, 'value':flaten[x].value})
+                k = []
+			}
+            
+            
+        } else {
+            vll.push({'key': key, 'value': value})
+        }
+        
+    
+    }
+    
+    return vll;
+}
+
+function flattenn(arr) {
+  return arr.reduce(function (flat, toFlattenn) {
+    return flat.concat(Array.isArray(toFlattenn) ? flattenn(toFlattenn) : toFlattenn);
+  }, []);
+}
+
+console.log(flatten(objs));
+console.log(flatten(obj));
+console.log(flatten(ob));
+
+var jsonStr = JSON.stringify(flatten(objs));
+
+document.write("<form onsubmit='myFunction()'><br></br>Enter input: <br></br><textarea type='text' name='message' id='user_input'></textarea><br></br><button readonly type=button' onclick='showMessage()' value='submit' >Submit</button></form><br></br>Output : <br></br>", jsonStr);
+
+function showMessage() {
+  	var obj = document.getElementById("user_input").value;
+	console.log(obj)
+	flatten(obj)
+}
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>
